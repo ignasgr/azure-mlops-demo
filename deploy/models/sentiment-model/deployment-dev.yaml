@@ -6,6 +6,8 @@ jobs:
 - deployment: RegisterModel
   displayName: Register Model in Workspace - ${{ parameters.Environment }}
   environment: ${{ parameters.Environment }}
+  variables:
+    - template: ./configuration/variables-${{ parameters.Environment }}.yaml
   strategy:
     runOnce:
       deploy:
@@ -19,6 +21,8 @@ jobs:
   dependsOn:
     - RegisterModel
   environment: ${{ parameters.Environment }}
+  variables:
+    - template: ./configuration/variables-${{ parameters.Environment }}.yaml
   strategy:
     runOnce:
       deploy:
@@ -32,6 +36,8 @@ jobs:
   dependsOn:
     - CreateOnlineEndpoint
   environment: ${{ parameters.Environment }}
+  variables:
+    - template: ./configuration/variables-${{ parameters.Environment }}.yaml
   strategy:
     runOnce:
       deploy:
@@ -45,6 +51,8 @@ jobs:
   dependsOn:
     - CreateOnlineDeployment
   environment: ${{ parameters.Environment }}
+  variables:
+    - template: ./configuration/variables-${{ parameters.Environment }}.yaml
   strategy:
     runOnce:
       deploy:

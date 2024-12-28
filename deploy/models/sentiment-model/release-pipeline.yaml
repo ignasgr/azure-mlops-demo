@@ -16,8 +16,6 @@ stages:
   - stage: Dev
     displayName: Deploy Model - Dev
     dependsOn: []
-    variables:
-    - template: ./configuration/variables-dev.yaml
     jobs:
     - template: ./deployment-dev.yaml
       parameters:
