@@ -36,7 +36,7 @@ jobs:
     runOnce:
       deploy:
         steps:
-          - template: ./endpoint/create-online-deployment.yaml
+          - template: ./deployment/create-online-deployment.yaml
             parameters:
               Environment: ${{ parameters.Environment }}
 

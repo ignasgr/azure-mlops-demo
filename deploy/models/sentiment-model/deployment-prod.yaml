@@ -29,7 +29,7 @@ jobs:
     runOnce:
       deploy:
         steps:
-          - template: ./model/share-environment.yaml
+          - template: ./environment/share-environment.yaml
             parameters:
               Environment: ${{ parameters.Environment }}
 
@@ -59,7 +59,7 @@ jobs:
     runOnce:
       deploy:
         steps:
-          - template: ./endpoint/create-online-deployment.yaml
+          - template: ./deployment/create-online-deployment.yaml
             parameters:
               Environment: ${{ parameters.Environment }}
 
