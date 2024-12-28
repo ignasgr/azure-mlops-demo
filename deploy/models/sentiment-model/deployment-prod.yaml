@@ -1,0 +1,79 @@
+parameters:
+- name: Environment
+  type: string
+- name: ShareEnvironment
+  type: string
+
+jobs:
+- deployment: ShareModel
+  displayName: Share Model to Registry - ${{ parameters.Environment }}
+  environment: ${{ parameters.Environment }}
+  variables:
+    - template: ./configuration/variables-${{ parameters.ShareEnvironment }}.yaml
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - template: ./model/share-model.yaml
+            parameters:
+              Environment: ${{ parameters.Environment }}
+
+- deployment: ShareEnvironment
+  displayName: Share Environment to Registry - ${{ parameters.Environment }}
+  dependsOn:
+    - ShareModel
+  environment: ${{ parameters.Environment }}
+  variables:
+    - template: ./configuration/variables-${{ parameters.ShareEnvironment }}.yaml
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - template: ./model/share-environment.yaml
+            parameters:
+              Environment: ${{ parameters.Environment }}
+
+- deployment: CreateOnlineEndpoint
+  displayName: Create Online Endpoint - ${{ parameters.Environment }}
+  dependsOn:
+    - ShareEnvironment
+  environment: ${{ parameters.Environment }}
+  variables:
+    - template: ./configuration/variables-${{ parameters.Environment }}.yaml
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - template: ./endpoint/create-online-endpoint.yaml
+            parameters:
+              Environment: ${{ parameters.Environment }}
+
+- deployment: CreateOnlineDeployment
+  displayName: Create Deployment on Endpoint - ${{ parameters.Environment }}
+  dependsOn:
+    - CreateOnlineEndpoint
+  environment: ${{ parameters.Environment }}
+  variables:
+    - template: ./configuration/variables-${{ parameters.Environment }}.yaml
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - template: ./endpoint/create-online-deployment.yaml
+            parameters:
+              Environment: ${{ parameters.Environment }}
+
+- deployment: SetEndpointTraffic
+  displayName: Set Traffic on Endpoint - ${{ parameters.Environment }}
+  dependsOn:
+  - CreateOnlineDeployment
+  environment: ${{ parameters.Environment }}
+  variables:
+    - template: ./configuration/variables-${{ parameters.Environment }}.yaml
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - template: ./endpoint/set-endpoint-traffic.yaml
+            parameters:
+              Environment: ${{ parameters.Environment }}

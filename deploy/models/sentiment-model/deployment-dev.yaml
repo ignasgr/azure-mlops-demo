@@ -1,0 +1,54 @@
+parameters:
+- name: Environment
+  type: string
+
+jobs:
+- deployment: RegisterModel
+  displayName: Register Model in Workspace - ${{ parameters.Environment }}
+  environment: ${{ parameters.Environment }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - template: ./model/register-model.yaml
+            parameters:
+              Environment: ${{ parameters.Environment }}
+
+- deployment: CreateOnlineEndpoint
+  displayName: Create Online Endpoint - ${{ parameters.Environment }}
+  dependsOn:
+    - RegisterModel
+  environment: ${{ parameters.Environment }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - template: ./endpoint/create-online-endpoint.yaml
+            parameters:
+              Environment: ${{ parameters.Environment }}
+
+- deployment: CreateOnlineDeployment
+  displayName: Create Deployment on Endpoint - ${{ parameters.Environment }}
+  dependsOn:
+    - CreateOnlineEndpoint
+  environment: ${{ parameters.Environment }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - template: ./endpoint/create-online-deployment.yaml
+            parameters:
+              Environment: ${{ parameters.Environment }}
+
+- deployment: SetEndpointTraffic
+  displayName: Set Traffic on Endpoint - ${{ parameters.Environment }}
+  dependsOn:
+    - CreateOnlineDeployment
+  environment: ${{ parameters.Environment }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - template: ./endpoint/set-endpoint-traffic.yaml
+            parameters:
+              Environment: ${{ parameters.Environment }}

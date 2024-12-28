@@ -1,0 +1,10 @@
+# directories
+docs/
+__pycache__/
+ignore/
+deploy/models-old/
+
+# files
+.env
+.python-version
+

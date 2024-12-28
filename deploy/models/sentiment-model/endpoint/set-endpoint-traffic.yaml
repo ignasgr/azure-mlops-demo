@@ -1,0 +1,28 @@
+parameters:
+- name: Environment
+  type: string
+
+steps:
+- checkout: self
+
+- task: AzureCLI@2
+  displayName: "Install Azure CLI"
+  inputs:
+    azureSubscription: $(PipelineServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az version
+      az extension add --name ml --yes --upgrade
+      az configure --defaults group=$(ResourceGroup) workspace=$(WorkspaceName)
+
+- task: AzureCLI@2
+  displayName: "Allocate Traffice to Endpoint"
+  inputs:
+    azureSubscription: $(PipelineServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az ml online-endpoint update \
+      --name $(EndpointName) \
+      --traffic $(DeploymentName)=100

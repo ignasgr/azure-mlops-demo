@@ -1,0 +1,21 @@
+name: mlops-demo-train
+channels:
+  - defaults
+dependencies:
+  - python=3.11.9
+  - pip=24.0
+  - pip:
+    - azure-ai-ml==1.22.1
+    - azure-identity==1.19.0
+    - azure-keyvault-secrets==4.9.0
+    - azure-storage-blob==12.24.0
+    - ipykernel==6.29.5
+    - matplotlib==3.9.2
+    - mlflow==2.18.0
+    - azureml-mlflow==1.36.0
+    - numpy==2.0.2
+    - pandas==2.2.3
+    - python-dotenv==1.0.1
+    - scikit-learn==1.5.2
+    - spacy==3.8.2
+    - en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl

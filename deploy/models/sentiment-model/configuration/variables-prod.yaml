@@ -1,0 +1,16 @@
+variables:
+  PipelineServiceConnection: arm-mlops-demo
+  ResourceGroup: mlops-demo-rg
+  WorkspaceName: mlw-prod
+  ModelName: bow-sentiment
+  ModelVersion: 1
+  ModelDescription: null
+  EnvironmentName: mlops-demo-inf
+  EnvironmentVersion: 1
+  EndpointName: sentiment-ep
+  DeploymentName: sklearn-bow-sentiment-dp
+  Description: null
+  KeyVaultName: uscgeneralkv-prod
+  DeploymentInstanceType: Standard_E2s_v3
+  DeploymentInstanceCount: 1
+  RegistryName: mlops-demo-registry

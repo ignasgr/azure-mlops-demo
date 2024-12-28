@@ -1,0 +1,35 @@
+parameters:
+- name: DevEnabled
+  displayName: Deploy Dev
+  type: boolean
+  default: true
+
+- name: ProdEnabled
+  displayName: Deploy Prod
+  type: boolean
+  default: false
+
+trigger: none
+
+stages:
+- ${{ if eq(parameters.DevEnabled, 'true') }}:
+  - stage: Dev
+    displayName: Deploy Model - Dev
+    dependsOn: []
+    variables:
+    - template: ./configuration/variables-dev.yaml
+    jobs:
+    - template: ./deployment-dev.yaml
+      parameters:
+        Environment: dev
+
+- ${{ if eq(parameters.ProdEnabled, 'true') }}:
+  - stage: Prod
+    displayName: Deploy Model - Prod
+    ${{ if eq(parameters.DevEnabled, 'true') }}:
+      dependsOn: Dev
+    jobs:
+    - template: ./deployment-prod.yaml
+      parameters:
+        Environment: prod
+        ShareEnvironment: dev

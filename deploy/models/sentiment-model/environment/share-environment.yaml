@@ -1,0 +1,31 @@
+parameters:
+- name: Environment
+  type: string
+
+steps:
+- checkout: self
+
+- task: AzureCLI@2
+  displayName: "Install Azure CLI"
+  inputs:
+    azureSubscription: $(PipelineServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az version
+      az extension add --name ml --yes --upgrade
+      az configure --defaults group=$(ResourceGroup) workspace=$(WorkspaceName)
+
+- task: AzureCLI@2
+  displayName: "Register Model in Azure ML"
+  inputs:
+    azureSubscription: $(PipelineServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az ml environment share \
+      --name $(EnvironmentName) \
+      --version $(EnvironmentVersion) \
+      --registry-name $(RegistryName) \
+      --share-with-name $(EnvironmentName) \
+      --share-with-version $(EnvironmentVersion)

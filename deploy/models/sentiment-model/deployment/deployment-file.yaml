@@ -1,0 +1,11 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+
+name: ""
+endpoint_name: ""
+model: ""
+environment: ""
+code_configuration:
+  code: ""
+  scoring_script: ""
+instance_type: ""
+instance_count: ""

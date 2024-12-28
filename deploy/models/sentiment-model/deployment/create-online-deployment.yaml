@@ -1,0 +1,43 @@
+parameters:
+- name: Environment
+  type: string
+
+steps:
+- checkout: self
+
+- task: AzureCLI@2
+  displayName: "Install Azure CLI"
+  inputs:
+    azureSubscription: $(PipelineServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az version
+      az extension add --name ml --yes --upgrade
+      az configure --defaults group=$(ResourceGroup) workspace=$(WorkspaceName)
+
+- task: AzureCLI@2
+  displayName: "Create Managed Online Deployment"
+  inputs:
+    azureSubscription: $(PipelineServiceConnection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      if [ "${{ parameters.Environment }}" == "prod" ]; then
+        MODEL_PATH="azureml:registries/$(RegistryName)/models/$(ModelName)/versions/$(ModelVersion)"
+        ENVIRONMENT_PATH="azureml:registries/$(RegistryName)/environments/$(EnvironmentName)/versions/$(EnvironmentVersion)"
+      else
+        MODEL_PATH="azureml:$(ModelName):$(ModelVersion)"
+        ENVIRONMENT_PATH="azureml:$(ModelName):$(ModelVersion)"
+      fi
+
+      az ml online-deployment create \
+        --file $(Build.SourcesDirectory)/deploy/models/sentiment-model/deployment/deployment-file.yaml \
+        --set name=$(DeploymentName) \
+        --set endpoint_name=$(EndpointName) \
+        --set model=$MODEL_PATH \
+        --set environment=$ENVIRONMENT_PATH \
+        --set code_configuration.code=$(Build.SourcesDirectory)/src \
+        --set code_configuration.scoring_script=score.py \
+        --set instance_type=$(DeploymentInstanceType) \
+        --set instance_count=$(DeploymentInstanceCount) 

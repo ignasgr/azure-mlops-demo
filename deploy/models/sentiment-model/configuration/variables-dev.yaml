@@ -1,0 +1,19 @@
+variables:
+  PipelineServiceConnection: arm-mlops-demo
+  ResourceGroup: mlops-demo-rg
+  WorkspaceName: mlw-dev
+  JobName: khaki_egg_rvl0722282
+  ModelName: bow-sentiment
+  ModelVersion: 1
+  ModelType: custom_model
+  ModelDescription: null
+  ModelArtifactName: model_pipeline.pkl
+  EnvironmentName: mlops-demo-inf
+  EnvironmentVersion: 1
+  EndpointName: sentiment-ep
+  DeploymentName: sklearn-bow-sentiment-dp
+  Description: null
+  KeyVaultName: uscgeneralkv-dev
+  DeploymentInstanceType: Standard_E2s_v3
+  DeploymentInstanceCount: 1
+  RegistryName: mlops-demo-registry
