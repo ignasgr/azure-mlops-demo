@@ -5,10 +5,6 @@ parameters:
 steps:
 - checkout: self
 
-- script: |
-    echo "PipelineServiceConnection: $(PipelineServiceConnection)"
-  displayName: "Debug Service Connection Variable"
-
 - task: AzureCLI@2
   displayName: "Install Azure CLI"
   inputs:
