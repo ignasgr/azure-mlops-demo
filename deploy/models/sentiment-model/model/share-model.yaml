@@ -8,7 +8,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Install Azure CLI"
   inputs:
-    azureSubscription: $(PipelineServiceConnection)
+    azureSubscription: arm-mlops-demo
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
@@ -19,7 +19,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Share Model to Registry"
   inputs:
-    azureSubscription: $(PipelineServiceConnection)
+    azureSubscription: arm-mlops-demo
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |

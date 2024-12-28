@@ -8,7 +8,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Install Azure CLI"
   inputs:
-    azureSubscription: $(PipelineServiceConnection)
+    azureSubscription: arm-mlops-demo
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
@@ -19,7 +19,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Create Endpoint in Azure ML"
   inputs:
-    azureSubscription: $(PipelineServiceConnection)
+    azureSubscription: arm-mlops-demo
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
@@ -30,7 +30,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Get Endpoint Information"
   inputs:
-    azureSubscription: $(PipelineServiceConnection)
+    azureSubscription: arm-mlops-demo
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
@@ -47,7 +47,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Store Scoring URI in Key Vault"
   inputs:
-    azureSubscription: $(PipelineServiceConnection)
+    azureSubscription: arm-mlops-demo
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
@@ -56,7 +56,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Store Endpoint Swagger URI in Key Vault"
   inputs:
-    azureSubscription: $(PipelineServiceConnection)
+    azureSubscription: arm-mlops-demo
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
@@ -65,7 +65,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Store Endpoint Primary Key in Key Vault"
   inputs:
-    azureSubscription: $(PipelineServiceConnection)
+    azureSubscription: arm-mlops-demo
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
@@ -74,7 +74,7 @@ steps:
 - task: AzureCLI@2
   displayName: "Store Endpoint Secondary Key in Key Vault"
   inputs:
-    azureSubscription: $(PipelineServiceConnection)
+    azureSubscription: arm-mlops-demo
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
