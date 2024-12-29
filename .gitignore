@@ -1,5 +1,4 @@
 # directories
-docs/
 __pycache__/
 ignore/
 deploy/models-old/
@@ -7,4 +6,5 @@ deploy/models-old/
 # files
 .env
 .python-version
+notes.md
 
