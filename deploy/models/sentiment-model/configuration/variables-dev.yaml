@@ -10,7 +10,7 @@ variables:
   ModelArtifactName: model_pipeline.pkl
   EnvironmentName: mlops-demo-inf
   EnvironmentVersion: 1
-  EndpointName: sentiment-ep
+  EndpointName: sentiment-ep-dev
   DeploymentName: sklearn-bow-sentiment-dp
   Description: null
   KeyVaultName: uscgeneralkv-dev
