@@ -3,21 +3,10 @@ parameters:
   type: string
 - name: ShareEnvironment
   type: string
-- name: EnableShareModel
-  type: boolean
-- name: EnableShareEnvironment
-  type: boolean
-- name: EnableCreateOnlineEndpoint
-  type: boolean
-- name: EnableCreateOnlineDeployment
-  type: boolean
-- name: EnableSetEndpointTraffic
-  type: boolean
 
 jobs:
 - deployment: ShareModel
   displayName: Share Model to Registry - ${{ parameters.Environment }}
-  condition: eq('${{ parameters.EnableShareModel }}', 'true')
   environment: ${{ parameters.Environment }}
   variables:
     - template: ./configuration/variables-${{ parameters.ShareEnvironment }}.yaml
@@ -31,7 +20,6 @@ jobs:
 
 - deployment: ShareEnvironment
   displayName: Share Environment to Registry - ${{ parameters.Environment }}
-  condition: eq('${{ parameters.EnableShareEnvironment }}', 'true')
   dependsOn:
     - ShareModel
   environment: ${{ parameters.Environment }}
@@ -47,7 +35,6 @@ jobs:
 
 - deployment: CreateOnlineEndpoint
   displayName: Create Online Endpoint - ${{ parameters.Environment }}
-  condition: eq('${{ parameters.EnableCreateOnlineEndpoint }}', 'true')
   dependsOn:
     - ShareEnvironment
   environment: ${{ parameters.Environment }}
@@ -63,7 +50,6 @@ jobs:
 
 - deployment: CreateOnlineDeployment
   displayName: Create Deployment on Endpoint - ${{ parameters.Environment }}
-  condition: eq('${{ parameters.EnableCreateOnlineDeployment }}', 'true')
   dependsOn:
     - CreateOnlineEndpoint
   environment: ${{ parameters.Environment }}
@@ -79,7 +65,6 @@ jobs:
 
 - deployment: SetEndpointTraffic
   displayName: Set Traffic on Endpoint - ${{ parameters.Environment }}
-  condition: eq('${{ parameters.EnableSetEndpointTraffic }}', 'true')
   dependsOn:
   - CreateOnlineDeployment
   environment: ${{ parameters.Environment }}
