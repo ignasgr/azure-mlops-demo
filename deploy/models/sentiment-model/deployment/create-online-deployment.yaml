@@ -28,7 +28,7 @@ steps:
         ENVIRONMENT_PATH="azureml:registries/$(RegistryName)/environments/$(EnvironmentName)/versions/$(EnvironmentVersion)"
       else
         MODEL_PATH="azureml:$(ModelName):$(ModelVersion)"
-        ENVIRONMENT_PATH="azureml:$(ModelName):$(ModelVersion)"
+        ENVIRONMENT_PATH="azureml:$(EnvironmentName):$(EnvironmentVersion)"
       fi
 
       az ml online-deployment create \
