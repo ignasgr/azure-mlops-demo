@@ -24,8 +24,8 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       if [ "${{ parameters.Environment }}" == "prod" ]; then
-        MODEL_PATH="azureml:registries/$(RegistryName)/models/$(ModelName)/versions/$(ModelVersion)"
-        ENVIRONMENT_PATH="azureml:registries/$(RegistryName)/environments/$(EnvironmentName)/versions/$(EnvironmentVersion)"
+        MODEL_PATH="azureml://registries/$(RegistryName)/models/$(ModelName)/versions/$(ModelVersion)"
+        ENVIRONMENT_PATH="azureml://registries/$(RegistryName)/environments/$(EnvironmentName)/versions/$(EnvironmentVersion)"
       else
         MODEL_PATH="azureml:$(ModelName):$(ModelVersion)"
         ENVIRONMENT_PATH="azureml:$(EnvironmentName):$(EnvironmentVersion)"
